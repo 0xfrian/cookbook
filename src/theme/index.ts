@@ -15,7 +15,7 @@ export default extendTheme({
       body: {
         margin: "0px", 
         padding: "0px",
-        color: "white",
+        color: "#f8f8f2",
         fontSize: "14px",
         fontFamily: `"JetBrains Mono", sans-serif`,
         background: "#282a36",

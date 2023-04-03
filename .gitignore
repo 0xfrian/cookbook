@@ -1,0 +1,12 @@
+# dotenv environment variable files
+.env
+
+# Next.js build output
+.next
+
+# Node modules
+node_modules
+
+# TypeScript cache
+*.tsbuildinfo
+

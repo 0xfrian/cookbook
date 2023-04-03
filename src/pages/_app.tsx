@@ -2,6 +2,9 @@
 import { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";
 
+// Fonts
+import "@fontsource/jetbrains-mono";
+
 // Chakra-UI Theme
 import theme from "../theme";
 

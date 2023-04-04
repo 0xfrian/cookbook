@@ -15,7 +15,7 @@ export default function CurveContainer({ children, heading }: any) {
       height="100%"
       background="#44475a"
       border="6px double white"
-      boxShadow="0 0 0 3px #44475a, 10px 10px 3px black"
+      boxShadow="0 0 0 3px #44475a, 15px 15px 3px black"
     >
       <Flex 
         id="inner-container"
@@ -24,7 +24,7 @@ export default function CurveContainer({ children, heading }: any) {
         justifyContent="start"
         alignItems="start"
         margin="10px"
-        padding="15px"
+        padding="30px 15px 15px"
         width="100%"
         height="100%"
         minHeight="100px"

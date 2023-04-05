@@ -1,47 +1,95 @@
 // Components
 import {
   Button,
+  Divider,
   Flex,
   FormLabel,
   Heading,
+  Image,
   Input,
+  Text,
 } from "@chakra-ui/react";
 import Head from "next/head";
 import CurveContainer from "../components/CurveContainer";
+import DropzoneBox from "../components/DropzoneBox";
+import { MdOutlinePhoto as ImageIcon } from "react-icons/md";
+
+// Dependencies
+import axios from "axios";
+import { v4 as uuid } from "uuid";
 
 // Constants, Functions, and Hooks
-import axios from "axios";
+const gallery_size: number = 5;
 import { useEffect, useState } from "react";
 
 // Types
-import type { ChangeEvent } from "react";
-import type { AxiosResponse } from "axios";
+import type { FormEvent, ReactElement } from "react";
+import CurveSubContainer from "../components/CurveSubContainer";
 
 export default function index() {
-  const [data, setData] = useState<string | ArrayBuffer>();
+  // State variables
+  const [data, setData] = useState<any[]>(() => {
+    let data_init: any[] = [];
+    for (let i = 0; i < gallery_size; i++) {
+      data_init.push(new Object());
+    }
+    return data_init;
+  });
+  const [bucket, setBucket] = useState<string>("");
+  const [image, setImage] = useState<string>("");
 
-  async function handleFiles(event: ChangeEvent<HTMLInputElement>) {
-    // Define files
-    const files: FileList = event.target.files!;
-    const image_file: File = files[0];
+  function renderGallery() {
+    const gallery: ReactElement[] = [];
+    for (let i = 0; i < gallery_size; i++) {
+      gallery.push(
+        <DropzoneBox
+          key={uuid()}
+          index={i}
+          data={data} setData={setData}
+        />
+      );
+    }
 
-    // Store image file as base64 string
-    const reader = new FileReader();
-    reader.readAsDataURL(image_file);
-    reader.onload = () => setData(reader.result!);
+    return gallery;
   }
 
-  async function handleSendGETRequest() {
-    const response: AxiosResponse = await axios({
-      method: "GET",
-      url: "/api/",
+  async function handleUpload() {
+    const data_b64s: any[] = [];
+    for (let i = 0; i < data.length; i++ ) {
+      data_b64s.push({
+        name: data[i].name,
+        b64s: data[i].b64s,
+      });
+    }
+
+    const response = await axios.post("/api/upload_images", {
+      images: data_b64s,
     });
-    console.log("Response: ", response.data.name);
+  }
+
+  async function handleView(event: FormEvent<HTMLElement>) {
+    event.preventDefault();
+    const image_name: string = (event.target as any).image_name.value;
+    const image_b64s: string = (await axios.post("/api/view_image", {
+      image_name: image_name,
+    })).data.image_b64s;
+    setImage(image_b64s);
   }
 
   useEffect(() => {
-    if (data) console.log("Base64 String: ", data);
-  }, [data]);
+    // On mount
+    async function init() {
+      // Fetch S3 bucket name
+      const bucket_name: string = (await axios.get("/api/secret_ingredient"))
+        .data?.bucket_name;
+      setBucket(bucket_name);
+    }
+
+    init();
+
+    // On unmount
+    return () => data.forEach(image => URL.revokeObjectURL(image.preview));
+  }, []);
 
   return (
     <>
@@ -94,50 +142,126 @@ export default function index() {
             </Flex>
 
             <CurveContainer heading="AWS S3">
-              <Flex
-                flexDirection="row"
-                justifyContent="center"
-                alignItems="center"
-                gap="20px"
-                width="100%"
-              >
-                <FormLabel htmlFor="sample-image" >
-                  Upload an image
-                </FormLabel>
-                <Input
-                  id="sample-image"
-                  type="file"
-                  margin="0"
-                  padding="0"
-                  width="min-content"
-                  height="min-content"
-                  fontSize="14px"
-                  border="none"
-                  borderRadius="0"
-                  multiple={false}
-                  onChange={handleFiles}
-                />
-              </Flex>
-            </CurveContainer>
+              <Flex flexDirection="column" width="100%">
+                <Heading fontSize="14px" fontWeight="normal">
+                  Amazon S3 Bucket: 
+                  <Text
+                    display="inline"
+                    marginLeft="10px"
+                    padding="4px 8px"
+                    color="white"
+                    fontSize="14px"
+                    background="blue.400"
+                    borderRadius="5px"
+                  >
+                    {bucket}
+                  </Text>
+                </Heading>
 
-            <CurveContainer heading="Next.js API">
-              <Flex
-                flexDirection="row"
-                justifyContent="center"
-                alignItems="center"
-                gap="20px"
-                width="100%"
-              >
-                <FormLabel htmlFor="send-get-request">
-                  Send GET Request
-                </FormLabel>
-                <Button
-                  id="send-get-request"
-                  variant="main"
-                  onClick={handleSendGETRequest}
-                >
-                  SEND
-                </Button>
+                <Divider margin="20px 0" border="none" />
+
+                <CurveSubContainer heading="Upload Images">
+                  <Flex
+                    id="image-gallery"
+                    flexDirection="row"
+                    justifyContent="center"
+                    alignItems="center"
+                    gap="30px"
+                    padding="20px"
+                  >
+                    {renderGallery()}
+                  </Flex>
+                  <Flex
+                    id="btn-container"
+                    flexDirection="row"
+                    justifyContent="center"
+                    alignItems="center"
+                    marginBottom="10px"
+                    width="100%"
+                  >
+                    <Button
+                      variant="main"
+                      color="dracula_fg"
+                      background="green.400"
+                      onClick={handleUpload}
+                    >
+                      UPLOAD
+                    </Button>
+                  </Flex>
+                </CurveSubContainer>
+
+                <Divider margin="30px 0" border="none" />
+
+                <CurveSubContainer heading="View Image">
+                  <Flex
+                    flexDirection="column"
+                    justifyContent="start"
+                    alignItems="start"
+                    padding="20px"
+                    width="100%"
+                  >
+                    <form onSubmit={(event) => handleView(event)}>
+                      <FormLabel
+                        htmlFor="image_name"
+                        marginRight="10px"
+                        whiteSpace="nowrap"
+                      >
+                        Image Name:
+                      </FormLabel>
+                      <Flex alignItems="center" marginBottom="20px">
+                        <Input
+                          id="image_name"
+                          name="image_name"
+                          type="text"
+                          marginRight="20px"
+                          width="100%"
+                          maxWidth="250px"
+                          fontSize="14px"
+                          color="black"
+                          background="white"
+                          border="none"
+                          borderRadius="none"
+                          autoComplete="off"
+                        />
+                        <Button
+                          type="submit"
+                          variant="main"
+                          padding="4px 12px"
+                          color="dracula_fg"
+                          background="green.400"
+                        >
+                          VIEW
+                        </Button>
+                      </Flex>
+                    </form>
+
+                    <Flex justifyContent="center" width="100%">
+                      {
+                        image
+                          ? (
+                            <Image
+                              src={image}
+                              width="96px"
+                              height="96px"
+                              borderRadius="5px"
+                            />
+                          ) : (
+                            <Flex 
+                              flexDirection="column"
+                              justifyContent="center"
+                              alignItems="center"
+                              width="96px"
+                              height="96px"
+                              border="1px solid white"
+                              borderRadius="5px"
+                            >
+                              <ImageIcon size="30px" />
+                            </Flex>
+                          )
+                      }
+                    </Flex>
+                  </Flex>
+                </CurveSubContainer>
               </Flex>
             </CurveContainer>
           </Flex>

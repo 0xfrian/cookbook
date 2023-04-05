@@ -11,7 +11,7 @@ const main = defineStyle({
   border: "none",
   borderRadius: "0",
   boxShadow: "5px 5px 1px black",
-  transition: "all 200ms ease-in-out",
+  transition: "all 100ms ease-in-out",
   _hover: {
     filter: "brightness(0.8)",
   },

@@ -11,6 +11,10 @@ node_modules
 # TypeScript cache
 *.tsbuildinfo
 
-# Local testing files
+# Local testing files and mock data
 scripts
+data
+
+# Secret Ingredient
+secret_ingredient.*
 

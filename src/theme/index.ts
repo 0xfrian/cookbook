@@ -7,6 +7,19 @@ import { extendTheme } from "@chakra-ui/react";
 
 // Chakra-UI Custom Theme
 export default extendTheme({
+  colors: {
+    // Dracula Theme
+    dracula_bg: "#282a36",
+    dracula_fg: "#f8f8f2",
+    dracula_fg_alt: "#6272a4",
+    dracula_blue: "#8be9fd",
+    dracula_green: "#50fa7b",
+    dracula_orange: "#ffb86c",
+    dracula_pink: "#ff79c6",
+    dracula_purple: "#bd93f9",
+    dracula_red: "#ff5555",
+    dracula_yellow: "#f1fa8c",
+  },
   components: {
     Button,
     FormLabel,
@@ -16,19 +29,6 @@ export default extendTheme({
     body: `"JetBrains Mono", sans-serif`,
   },
   styles: {
-    colors: {
-      // Dracula Theme
-      dracula_bg: "#282a36",
-      dracula_fg: "#f8f8f2",
-      dracula_fg_alt: "#6272a4",
-      blue: "#8be9fd",
-      green: "#50fa7b",
-      orange: "#ffb86c",
-      pink: "#ff79c6",
-      purple: "#bd93f9",
-      red: "#ff5555",
-      yellow: "#f1fa8c",
-    },
     global: {
       body: {
         margin: "0px", 

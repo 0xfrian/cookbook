@@ -243,6 +243,8 @@ export default function index() {
                               src={image}
                               width="96px"
                               height="96px"
+                              minWidth="96px"
+                              minHeight="96px"
                               borderRadius="5px"
                             />
                           ) : (
@@ -252,6 +254,8 @@ export default function index() {
                               alignItems="center"
                               width="96px"
                               height="96px"
+                              minWidth="96px"
+                              minHeight="96px"
                               border="1px solid white"
                               borderRadius="5px"
                             >

@@ -52,6 +52,8 @@ export default function test() {
         />
         <meta name="viewport" content="viewport-fit=cover" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta property="og:title" content="Reactive Labs" />
+        <meta property="og:image" content="https://app.reactive.land/imgs/logoWordmark.png" />
       </Head>
 
       <Flex

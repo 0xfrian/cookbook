@@ -42,6 +42,7 @@ export default function OpenInvite({ isOpen, onClose, mode }: any) {
           >
             <Text>
               <Link
+                href="https://app.reactive.land/get-started"
                 color="#4064E4"
                 textDecoration="underline"
                 transition="all 200ms ease-in-out"
@@ -53,6 +54,7 @@ export default function OpenInvite({ isOpen, onClose, mode }: any) {
               </Link>
               {` or `}
               <Link
+                href="https://app.reactive.land/"
                 color="#4064E4"
                 textDecoration="underline"
                 transition="all 200ms ease-in-out"
@@ -76,8 +78,14 @@ export default function OpenInvite({ isOpen, onClose, mode }: any) {
           gap="8px"
           width="100%"
         >
-          <Button
+          <Link
+            href="https://app.reactive.land/get-started"
+            display="flex"
+            flexDirection="row"
+            justifyContent="center"
+            alignItems="center"
             width="100%"
+            minHeight="40px"
             fontSize="18px"
             fontWeight="normal"
             background="#4064E4"
@@ -87,10 +95,16 @@ export default function OpenInvite({ isOpen, onClose, mode }: any) {
             _active={{ }}
           >
             Create Account
-          </Button>
+          </Link>
           <Text>or</Text>
-          <Button
+          <Link
+            href="https://app.reactive.land/"
+            display="flex"
+            flexDirection="row"
+            justifyContent="center"
+            alignItems="center"
             width="100%"
+            minHeight="40px"
             fontSize="18px"
             fontWeight="normal"
             background="transparent"
@@ -101,7 +115,7 @@ export default function OpenInvite({ isOpen, onClose, mode }: any) {
             _active={{ }}
           >
             Log In
-          </Button>
+          </Link>
         </Flex>
       );
     } else {

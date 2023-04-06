@@ -99,7 +99,7 @@ export default function AcceptInvite({ isOpen, onClose, mode }: any) {
         alignItems="center"
         padding="20px"
         position="relative"
-        bottom="100px"
+        bottom={mode == "A2" ? "100px" : "50px"}
         width="600px"
         minWidth="600px"
         maxWidth="600px"

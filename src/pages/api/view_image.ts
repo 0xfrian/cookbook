@@ -32,9 +32,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     console.log("Sending command...");
     const image: GetObjectCommandOutput = await client.send(command);
     console.log("Done");
-    const image_b64s: string = await image.Body?.transformToString()!;
+    const image_src: any = await image.Body?.transformToString()!;
     res.status(200).json({
-      image_b64s: image_b64s,
+      image_src: image_src,
     });
     console.log();
   }

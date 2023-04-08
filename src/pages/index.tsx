@@ -28,6 +28,7 @@ import CurveSubContainer from "../components/CurveSubContainer";
 
 export default function index() {
   // State variables
+  const [file, setFile] = useState<File>();
   const [data, setData] = useState<any[]>(() => {
     let data_init: any[] = [];
     for (let i = 0; i < gallery_size; i++) {
@@ -54,27 +55,27 @@ export default function index() {
   }
 
   async function handleUpload() {
-    const data_b64s: any[] = [];
-    for (let i = 0; i < data.length; i++ ) {
-      data_b64s.push({
-        name: data[i].name,
-        b64s: data[i].b64s,
-      });
-    }
-
-    const response = await axios.post("/api/upload_images", {
-      images: data_b64s,
-    });
+    const response = await axios.post(
+      "/api/upload_images", 
+      { data: data },
+    );
   }
 
   async function handleView(event: FormEvent<HTMLElement>) {
     event.preventDefault();
     const image_name: string = (event.target as any).image_name.value;
-    const image_b64s: string = (await axios.post("/api/view_image", {
-      image_name: image_name,
-    })).data.image_b64s;
-    setImage(image_b64s);
+    const response: any = await axios.post(
+      "/api/view_image",
+      { image_name: image_name },
+    );
+    const image_src: string = response?.data?.image_src;
+    console.log("image_src: ", image_src);
+    setImage(image_src);
   }
+
+  useEffect(() => {
+    console.log("File: ", file);
+  }, [file]);
 
   useEffect(() => {
     // On mount
@@ -177,8 +178,25 @@ export default function index() {
                     justifyContent="center"
                     alignItems="center"
                     marginBottom="10px"
+                    gap="20px"
                     width="100%"
                   >
+                    <Input
+                      type="file"
+                      margin="0"
+                      padding="8px"
+                      width="min-content"
+                      height="min-content"
+                      border="1px solid white"
+                      borderRadius="5px"
+                      accept="image/*"
+                      onChange={(event) => (setFile(event.target.files![0]))}
+                      transition="all 200ms ease-in-out"
+                      _hover={{
+                        filter: "brightness(0.8)"
+                      }}
+                      _active={{}}
+                    />
                     <Button
                       variant="main"
                       color="dracula_fg"
@@ -200,7 +218,9 @@ export default function index() {
                     padding="20px"
                     width="100%"
                   >
-                    <form onSubmit={(event) => handleView(event)}>
+                    <form
+                      onSubmit={(event) => handleView(event)}
+                    >
                       <FormLabel
                         htmlFor="image_name"
                         marginRight="10px"

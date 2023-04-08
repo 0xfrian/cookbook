@@ -1,19 +1,15 @@
-export function base64ToBlob(base64: string, contentType: string): Blob {
-  const byteCharacters = atob(base64);
-  const byteArrays = [];
+export function readFile(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader: FileReader = new FileReader();
 
-  for (let offset = 0; offset < byteCharacters.length; offset += 512) {
-    const slice = byteCharacters.slice(offset, offset + 512);
-
-    const byteNumbers = new Array(slice.length);
-    for (let i = 0; i < slice.length; i++) {
-      byteNumbers[i] = slice.charCodeAt(i);
-    }
-
-    const byteArray = new Uint8Array(byteNumbers);
-    byteArrays.push(byteArray);
-  }
-
-  const blob = new Blob(byteArrays, { type: contentType });
-  return blob;
+    // Define event handlers
+    reader.onabort = () => console.log("File reading aborted!");
+    reader.onerror = () => console.log("File reading failed!");
+    reader.onload = () => resolve(reader.result as string);
+    
+    // reader.readAsArrayBuffer(file); // Read given file as ArrayBuffer
+    // reader.readAsBinaryString(file);  // Read given file as binary
+    reader.readAsDataURL(file); // Read given file as Base64 String
+  });
 }
+

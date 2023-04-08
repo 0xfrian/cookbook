@@ -8,6 +8,7 @@ import { v4 as uuid } from "uuid";
 // Constants, Functions, and Hooks
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { readFile } from "../utils/helpers";
 
 // Types
 import type { ReactElement } from "react";
@@ -27,24 +28,27 @@ export default function DropzoneBox({
     accept: {
       "image/*": [],
     },
-    onDrop: (acceptedFiles) => {
-      // Update state variable: files
-      const file_uploaded: any = acceptedFiles[0];
-      const file_new: any = {
-        name: file_uploaded.path,
-        preview: URL.createObjectURL(file_uploaded),
-      };
-      const reader: FileReader = new FileReader();
-      reader.onabort = () => console.log("File reading aborted!");
-      reader.onerror = () => console.log("File reading failed!");
-      reader.onload = () => {
-        file_new.b64s = reader.result;
-      }
-      reader.readAsDataURL(file_uploaded); // encode image into base64 string
+    onDrop: (acceptedFiles: File[]) => {
+      async function init() {
+        // Parse file contents
+        const file_uploaded: any = acceptedFiles[0];
+        const file_data: string = await readFile(file_uploaded);
 
-      const data_new: any[] = [...data];
-      data_new.splice(index, 1, file_new);
-      setData(data_new);
+        // Construct custom file object
+        const file_new: any = {
+          name: file_uploaded.path,
+          preview: URL.createObjectURL(file_uploaded),
+          data: file_data,
+          type: file_uploaded.type,
+        };
+
+        // Insert new file object at the given index
+        const data_new: any[] = [...data];
+        data_new.splice(index, 1, file_new);
+        setData(data_new);
+      }
+
+      init();
     },
   };
   const { getRootProps, getInputProps } = useDropzone(options);

@@ -12,6 +12,14 @@ import type {
   PutObjectCommandOutput,
 } from "@aws-sdk/client-s3";
 
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "10mb",
+    },
+  },
+};
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method == "POST") {
     console.log("POST method received at: /api/");

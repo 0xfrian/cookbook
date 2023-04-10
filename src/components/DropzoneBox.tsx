@@ -25,27 +25,35 @@ export default function DropzoneBox({
   // react-dropzone
   const options: DropzoneOptions = {
     maxFiles: 1,
+    maxSize: 2000000, // 2MB
     accept: {
       "image/*": [],
     },
     onDrop: (acceptedFiles: File[]) => {
       async function init() {
         // Parse file contents
-        const file_uploaded: any = acceptedFiles[0];
-        const file_data: string = await readFile(file_uploaded);
+        if (acceptedFiles.length > 0) {
+          const file_uploaded: any = acceptedFiles[0];
+          const file_size: number = file_uploaded.size/(1024^2)/1000;
+          const file_data: string = await readFile(file_uploaded);
 
-        // Construct custom file object
-        const file_new: any = {
-          name: file_uploaded.path,
-          preview: URL.createObjectURL(file_uploaded),
-          data: file_data,
-          type: file_uploaded.type,
-        };
-
-        // Insert new file object at the given index
-        const data_new: any[] = [...data];
-        data_new.splice(index, 1, file_new);
-        setData(data_new);
+          console.log(`File Size: ${file_size.toFixed(2)} MB`);
+          
+          // Construct custom file object
+          const file_new: any = {
+            name: file_uploaded.path,
+            preview: URL.createObjectURL(file_uploaded),
+            data: file_data,
+            type: file_uploaded.type,
+          };
+          
+          // Insert new file object at the given index
+          const data_new: any[] = [...data];
+          data_new.splice(index, 1, file_new);
+          setData(data_new);
+        } else {
+          console.log("Invalid file upload!");
+        }
       }
 
       init();

@@ -74,10 +74,6 @@ export default function index() {
   }
 
   useEffect(() => {
-    console.log("File: ", file);
-  }, [file]);
-
-  useEffect(() => {
     // On mount
     async function init() {
       // Fetch S3 bucket name
@@ -162,6 +158,7 @@ export default function index() {
                 <Divider margin="20px 0" border="none" />
 
                 <CurveSubContainer heading="Upload Images">
+                  {/* Image Gallery */}
                   <Flex
                     id="image-gallery"
                     flexDirection="row"
@@ -172,6 +169,7 @@ export default function index() {
                   >
                     {renderGallery()}
                   </Flex>
+
                   <Flex
                     id="btn-container"
                     flexDirection="row"

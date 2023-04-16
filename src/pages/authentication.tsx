@@ -15,11 +15,12 @@ import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function authentication() {
   // Session data
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   useEffect(() => {
+    console.log("Status: ", status);
     console.log("Session: ", session);
-  }, []);
+  }, [session]);
 
   return (
     <>

@@ -1,6 +1,6 @@
 import { defineStyle, defineStyleConfig } from '@chakra-ui/react'
 
-const main = defineStyle({
+const standard = defineStyle({
   margin: "0",
   padding: "4px 8px",
   width: "min-content",
@@ -22,6 +22,6 @@ const main = defineStyle({
   }
 })
 
-const Button = defineStyleConfig({ variants: { main } });
+const Button = defineStyleConfig({ variants: { standard } });
 
 export default Button;

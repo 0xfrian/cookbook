@@ -1,13 +1,26 @@
 // Components
 import {
+  Button,
   Flex,
-  Link,
+  Text,
 } from "@chakra-ui/react";
+import { FcGoogle as GoogleIcon } from "react-icons/fc";
 import Head from "next/head";
 import CookbookLogo from "../components/CookbookLogo";
 import CurveContainer from "../components/CurveContainer";
 
-export default function index() {
+// Functions, Hooks
+import { useEffect } from "react";
+import { useSession, signIn, signOut } from "next-auth/react";
+
+export default function authentication() {
+  // Session data
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    console.log("Session: ", session);
+  }, []);
+
   return (
     <>
       <Head>
@@ -43,17 +56,18 @@ export default function index() {
           >
             <CookbookLogo />
 
-            <CurveContainer heading="Index">
-              <Link
-                href="/authentication"
+            <CurveContainer heading="NextAuth">
+              <Button
+                variant="standard"
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                gap="10px"
+                onClick={() => signIn("google")}
               >
-                Authentication
-              </Link>
-              <Link
-                href="/s3"
-              >
-                AWS S3
-              </Link>
+                <GoogleIcon size="20px" />
+                <Text>Log in with Google</Text>
+              </Button>
             </CurveContainer>
           </Flex>
         </Flex>
@@ -61,4 +75,5 @@ export default function index() {
     </>
   );
 }
+
 

@@ -44,16 +44,29 @@ export default function index() {
             <CookbookLogo />
 
             <CurveContainer heading="Index">
-              <Link
-                href="/authentication"
+              <Flex
+                flexDirection="row"
+                gap="25px"
               >
-                Authentication
-              </Link>
-              <Link
-                href="/s3"
-              >
-                AWS S3
-              </Link>
+                <Link
+                  href="/authentication"
+                  variant="standard"
+                >
+                  Authentication
+                </Link>
+                <Link
+                  href="/s3"
+                  variant="standard"
+                >
+                  AWS S3
+                </Link>
+                <Link
+                  href="/text-editor"
+                  variant="standard"
+                >
+                  Text Editor
+                </Link>
+              </Flex>
             </CurveContainer>
           </Flex>
         </Flex>

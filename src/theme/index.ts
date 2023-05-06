@@ -1,6 +1,7 @@
 // Components
 import Button from "./components/Button";
 import FormLabel from "./components/FormLabel";
+import Link from "./components/Link";
 
 // Functions
 import { extendTheme } from "@chakra-ui/react";
@@ -23,6 +24,7 @@ export default extendTheme({
   components: {
     Button,
     FormLabel,
+    Link,
   },
   fonts: {
     heading: `"JetBrains Mono", sans-serif`,

@@ -1,8 +1,11 @@
 import {
   Flex,
+  FormLabel,
+  Textarea,
 } from "@chakra-ui/react";
 import Head from "next/head";
-import CurveContainer from "../components/CurveContainer";
+import CurveContainer from "../components/Core/CurveContainer";
+import Editor from "../components/Lexical/Editor";
 
 export default function TextEditor() {
   return (
@@ -46,12 +49,36 @@ export default function TextEditor() {
             flexDirection="column"
             justifyContent="start"
             alignItems="center"
+            gap="50px"
             width="100%"
             maxWidth="800"
             height="100%"
           >
-            <CurveContainer heading="Rich-Text Editor">
-              Hello
+            <CurveContainer heading="HTML Textarea">
+              <FormLabel
+                htmlFor="text-area"
+                paddingBottom="5px"
+              >
+                Enter text:
+              </FormLabel>
+              <Textarea
+                id="text-area"
+                placeholder="hola mundo!"
+                height="100px"
+                background="rgba(0, 0, 0, 0.4)"
+                border="none"
+                resize="none"
+              />
+            </CurveContainer>
+
+            <CurveContainer heading="Lexical">
+              <FormLabel
+                htmlFor="lexical"
+                paddingBottom="5px"
+              >
+                Enter text:
+              </FormLabel>
+              <Editor />
             </CurveContainer>
           </Flex>
         </Flex>

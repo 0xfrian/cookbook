@@ -6,8 +6,8 @@ import {
 } from "@chakra-ui/react";
 import { FcGoogle as GoogleIcon } from "react-icons/fc";
 import Head from "next/head";
-import CookbookLogo from "../components/CookbookLogo";
-import CurveContainer from "../components/CurveContainer";
+import CookbookLogo from "../components/Core/CookbookLogo";
+import CurveContainer from "../components/Core/CurveContainer";
 
 // Functions, Hooks
 import { useEffect } from "react";

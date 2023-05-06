@@ -10,8 +10,9 @@ import {
   Text,
 } from "@chakra-ui/react";
 import Head from "next/head";
-import CurveContainer from "../components/CurveContainer";
-import DropzoneBox from "../components/DropzoneBox";
+import CookbookLogo from "../components/Core/CookbookLogo";
+import CurveSubContainer from "../components/Core/CurveSubContainer";
+import DropzoneBox from "../components/Core/DropzoneBox";
 import { MdOutlinePhoto as ImageIcon } from "react-icons/md";
 
 // Dependencies
@@ -24,7 +25,6 @@ import { useEffect, useState } from "react";
 
 // Types
 import type { FormEvent, ReactElement } from "react";
-import CurveSubContainer from "../components/CurveSubContainer";
 
 export default function index() {
   // State variables

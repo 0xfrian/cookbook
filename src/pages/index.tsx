@@ -4,8 +4,8 @@ import {
   Link,
 } from "@chakra-ui/react";
 import Head from "next/head";
-import CookbookLogo from "../components/CookbookLogo";
-import CurveContainer from "../components/CurveContainer";
+import CookbookLogo from "../components/Core/CookbookLogo";
+import CurveContainer from "../components/Core/CurveContainer";
 
 export default function index() {
   return (

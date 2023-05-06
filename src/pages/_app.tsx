@@ -1,14 +1,18 @@
-// Components
+// +-------------+
+// |   IMPORTS   |
+// +-------------+
+// Next.js
 import { AppProps } from "next/app";
-import { ChakraProvider } from "@chakra-ui/react";
+// NextAuth.js
 import { SessionProvider } from "next-auth/react";
-
+// ChakraUI
+import { ChakraProvider } from "@chakra-ui/react";
+import theme from "../theme";
 // Fonts
 import "@fontsource/jetbrains-mono";
 import Fonts from "../theme/fonts";
-
-// Chakra-UI Theme
-import theme from "../theme";
+// CSS Styles (Global)
+import "../styles.css";
 
 export default function MyApp({
   Component,
